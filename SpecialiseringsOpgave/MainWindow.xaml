@@ -5,7 +5,7 @@
     <TabControl>
         <TabItem Header="Destinations">
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"    >
                     <Label Content="Country: "></Label>
                     <TextBox Name="TextBoxCountry"></TextBox>
                 </StackPanel>
