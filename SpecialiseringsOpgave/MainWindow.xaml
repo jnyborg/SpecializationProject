@@ -1,0 +1,28 @@
+﻿<Window x:Class="SpecialiseringsOpgave.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <TabControl>
+        <TabItem Header="Destinations">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Country: "></Label>
+                    <TextBox Name="TextBoxCountry"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Switch day for holiday homes: "></Label>
+                <ComboBox Name="ComboBoxSwitchDay">
+                    <ComboBoxItem Content="Friday" HorizontalAlignment="Left" Width="509"/>
+                    <ComboBoxItem Content="Saturday" HorizontalAlignment="Left" Width="509"/>
+                    <ComboBoxItem Content="Sunday" HorizontalAlignment="Left" Width="509"/>
+                </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Flight price per person"></Label>
+                    <TextBox Name="TextBoxFlightPrice"></TextBox>
+                </StackPanel>
+                    
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window>
