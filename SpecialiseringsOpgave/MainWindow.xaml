@@ -4,7 +4,8 @@
         Title="MainWindow" Height="350" Width="525">
     <TabControl Margin="5,5,5,5">
         <TabItem Header="Destinationer">
-            <StackPanel Margin="5,5,5,5">
+            <StackPanel Margin="5,5,5,5" Orientation="Horizontal">
+                <ListBox></ListBox>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="254*" />
