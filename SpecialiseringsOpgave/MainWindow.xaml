@@ -2,27 +2,35 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
-    <TabControl>
-        <TabItem Header="Destinations">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal"    >
-                    <Label Content="Country: "></Label>
-                    <TextBox Name="TextBoxCountry"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Switch day for holiday homes: "></Label>
-                <ComboBox Name="ComboBoxSwitchDay">
-                    <ComboBoxItem Content="Friday" HorizontalAlignment="Left" Width="509"/>
-                    <ComboBoxItem Content="Saturday" HorizontalAlignment="Left" Width="509"/>
-                    <ComboBoxItem Content="Sunday" HorizontalAlignment="Left" Width="509"/>
-                </ComboBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Flight price per person"></Label>
-                    <TextBox Name="TextBoxFlightPrice"></TextBox>
-                </StackPanel>
-                    
+    <TabControl Margin="5,5,5,5">
+        <TabItem Header="Destinationer">
+            <StackPanel Margin="5,5,5,5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="254*" />
+                        <ColumnDefinition Width="257*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Land " Grid.Row="0" Grid.Column="0"></Label>
+                    <TextBox Name="TextBoxCountry" Grid.Row="0" Grid.Column="1" Margin="0,0,0,4" ></TextBox>
+                    <Label Content="Skiftedag for ferieboliger " Grid.Row="1" Grid.Column="0"></Label>
+                    <ComboBox Name="ComboBoxSwitchDay" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Right" Margin="0,0,0,4">
+                        <ComboBoxItem Content="Friday" HorizontalAlignment="Left" Width="150"/>
+                        <ComboBoxItem Content="Saturday" HorizontalAlignment="Left" Width="150"/>
+                        <ComboBoxItem Content="Sunday" HorizontalAlignment="Left" Width="150"/>
+                    </ComboBox>
+                    <Label Content="Pris for flyrejse pr. person" Grid.Row="2" Grid.Column="0"></Label>
+                    <TextBox Name="TextBoxFlightPrice" Grid.Row="2" Grid.Column="1" Margin="0,0,0,4"></TextBox>
+                </Grid>
             </StackPanel>
+        </TabItem>
+        <TabItem Header="Holiday Homes">
+            
         </TabItem>
     </TabControl>
 </Window>
