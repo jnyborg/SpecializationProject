@@ -1,37 +1,73 @@
 ﻿<Window x:Class="SpecialiseringsOpgave.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="494" Width="737" Loaded="Window_Loaded">
     <TabControl Margin="5,5,5,5">
-        <TabItem Header="Destinationer">
-            <StackPanel Margin="5,5,5,5" Orientation="Horizontal">
-                <ListBox></ListBox>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="254*" />
-                        <ColumnDefinition Width="257*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+        <TabItem Header="Destinationer" Height="22" VerticalAlignment="Bottom">
+            <StackPanel Margin="5,5,5,5" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                    <ListBox Width="200" Height="270" Name="ListBoxDestinations" SelectionChanged="ListBoxDestinations_SelectionChanged"></ListBox>
+                    <StackPanel>
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="254*" />
+                                <ColumnDefinition Width="257*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                    <Label Content="Land " Grid.Row="0" Grid.Column="0"></Label>
-                    <TextBox Name="TextBoxCountry" Grid.Row="0" Grid.Column="1" Margin="0,0,0,4" ></TextBox>
-                    <Label Content="Skiftedag for ferieboliger " Grid.Row="1" Grid.Column="0"></Label>
-                    <ComboBox Name="ComboBoxSwitchDay" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Right" Margin="0,0,0,4">
-                        <ComboBoxItem Content="Friday" HorizontalAlignment="Left" Width="150"/>
-                        <ComboBoxItem Content="Saturday" HorizontalAlignment="Left" Width="150"/>
-                        <ComboBoxItem Content="Sunday" HorizontalAlignment="Left" Width="150"/>
-                    </ComboBox>
-                    <Label Content="Pris for flyrejse pr. person" Grid.Row="2" Grid.Column="0"></Label>
-                    <TextBox Name="TextBoxFlightPrice" Grid.Row="2" Grid.Column="1" Margin="0,0,0,4"></TextBox>
-                </Grid>
+                            <Label Content="Land " Grid.Row="0" Grid.Column="0"></Label>
+                            <TextBox Name="TextBoxCountry" Grid.Row="0" Grid.Column="1" Margin="0,2,0,2" ></TextBox>
+                            <Label Content="Skiftedag for ferieboliger " Grid.Row="1" Grid.Column="0"></Label>
+                            <ComboBox Name="ComboBoxSwitchDay" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Right" Margin="0,2,0,2">
+                                <ComboBoxItem Name="BoxItemFri" Content="Fredag" HorizontalAlignment="Left" Width="125"/>
+                                <ComboBoxItem Name="BoxItemSat" Content="Lørdag" HorizontalAlignment="Left" Width="125"/>
+                                <ComboBoxItem Name="BoxItemSun" Content="Søndag" HorizontalAlignment="Left" Width="125"/>
+                            </ComboBox>
+                            <Label Content="Pris for flyrejse pr. person" Grid.Row="2" Grid.Column="0"></Label>
+                            <TextBox Name="TextBoxFlightPrice" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2"></TextBox>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Name="ButtonDestinationCreate" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,10,0,0" Content="Opret" Click="ButtonDestinationCreate_Click"></Button>
+                            <Button Name="ButtonDestinationUpdate" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Opdater" Click="ButtonDestinationUpdate_Click"></Button>
+                            <Button Name="ButtonDestinationDelete" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Slet" Click="ButtonDestinationDelete_Click"></Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </TabItem>
-        <TabItem Header="Holiday Homes">
-            
+        <TabItem Header="Ferieboliger">
+            <DockPanel LastChildFill="True" Margin="5,5,5,5">
+                <StackPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Content="Land: "></Label>
+                        <ComboBox HorizontalAlignment="Stretch" Margin="4,4"></ComboBox>
+                    </DockPanel >
+                    <Label Content="Holiday homes: "></Label>
+                    <ListBox Name="ListBoxHolidayHomes" Width="200" Height="350"></ListBox>
+                </StackPanel>
+                <StackPanel Margin="5,0,5,0">
+                    <Label Content="Beskrivelse: "></Label>
+                    <TextBox HorizontalAlignment="Stretch" Height="100"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Max antal personer: "></Label>
+                        <TextBox Name="TextBoxMaxPersons" Width="40" Margin="0,2,0,2"></TextBox>
+                        <Label Content="Distance til indkøb: "></Label>
+                        <TextBox Name="TextBoxShoppingDistance" Width="40" Margin="0,2,0,2"></TextBox>
+                        <Label Content="Distance til strand: "></Label>
+                        <TextBox Name="TextBoxBeachDistance" Width="40" Margin="0,2,0,2"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,10,0,0" Content="Create"></Button>
+                        <Button VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Update"></Button>
+                        <Button VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Delete"></Button>
+                    </StackPanel>
+                    <DataGrid></DataGrid>
+                </StackPanel>
+            </DockPanel>
         </TabItem>
     </TabControl>
 </Window>
