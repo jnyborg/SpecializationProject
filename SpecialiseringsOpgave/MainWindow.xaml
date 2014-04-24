@@ -35,6 +35,7 @@
                             <Button Name="ButtonDestinationUpdate" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Opdater" Click="ButtonDestinationUpdate_Click"></Button>
                             <Button Name="ButtonDestinationDelete" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Slet" Click="ButtonDestinationDelete_Click"></Button>
                         </StackPanel>
+                        <Label Name="DestinationMessage" HorizontalAlignment="Center"></Label>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -44,14 +45,14 @@
                 <StackPanel>
                     <DockPanel LastChildFill="True">
                         <Label Content="Land: "></Label>
-                        <ComboBox HorizontalAlignment="Stretch" Margin="4,4"></ComboBox>
+                        <ComboBox Name="ComboBoxCountries"  HorizontalAlignment="Stretch" Margin="4,4"></ComboBox>
                     </DockPanel >
                     <Label Content="Holiday homes: "></Label>
-                    <ListBox Name="ListBoxHolidayHomes" Width="200" Height="350"></ListBox>
+                    <ListBox Name="ListBoxHolidayHomes" Width="200" Height="350" SelectionChanged="ListBoxHolidayHomes_SelectionChanged"></ListBox>
                 </StackPanel>
                 <StackPanel Margin="5,0,5,0">
                     <Label Content="Beskrivelse: "></Label>
-                    <TextBox HorizontalAlignment="Stretch" Height="100"></TextBox>
+                    <TextBox Name="TextBoxDescription" HorizontalAlignment="Stretch" Height="100"></TextBox>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Max antal personer: "></Label>
                         <TextBox Name="TextBoxMaxPersons" Width="40" Margin="0,2,0,2"></TextBox>
@@ -61,11 +62,12 @@
                         <TextBox Name="TextBoxBeachDistance" Width="40" Margin="0,2,0,2"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,10,0,0" Content="Create"></Button>
-                        <Button VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Update"></Button>
-                        <Button VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Delete"></Button>
+                        <Button Name="HolidayHomeCreate" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,10,0,0" Content="Create"></Button>
+                        <Button Name="ButtonHolidayHomeUpdate" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Update" Click="ButtonHolidayHomeUpdate_Click"></Button>
+                        <Button Name="ButtonHolidayHomeDelete" VerticalAlignment="Bottom" Height="25" Width="70" HorizontalAlignment="Left" Margin="4,0,0,0" Content="Delete" Click="ButtonHolidayHomeDelete_Click"></Button>
                     </StackPanel>
-                    <DataGrid></DataGrid>
+                    <Label Name="HolidayHomeMessage" HorizontalAlignment="Center" ></Label>
+                    <DataGrid Name="DataGridWeeklyHolidayHomeInfo"></DataGrid>
                 </StackPanel>
             </DockPanel>
         </TabItem>
