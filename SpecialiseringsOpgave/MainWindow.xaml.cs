@@ -82,13 +82,20 @@ namespace SpecialiseringsOpgave
             ListBoxDestinations.SelectedValuePath = "id";
             ListBoxDestinations.SelectedIndex = previousSelectedIndex;
 
+            previousSelectedIndex = ListBoxHolidayHomes.SelectedIndex;
             ListBoxHolidayHomes.ItemsSource = Service.GetHolidayHomes().DefaultView;
             ListBoxHolidayHomes.DisplayMemberPath = "description";
             ListBoxHolidayHomes.SelectedValuePath = "id";
+            ListBoxHolidayHomes.SelectedIndex = previousSelectedIndex;
 
+            if (ComboBoxCountries.SelectedIndex > 0)
+                previousSelectedIndex = ComboBoxCountries.SelectedIndex;
+            else
+                previousSelectedIndex = 0;
             ComboBoxCountries.ItemsSource = Service.GetDestinations().DefaultView;
             ComboBoxCountries.DisplayMemberPath = "country";
             ComboBoxCountries.SelectedValuePath = "id";
+            ComboBoxCountries.SelectedIndex = previousSelectedIndex;
 
         }
 
@@ -159,8 +166,44 @@ namespace SpecialiseringsOpgave
             TextBoxBeachDistance.Text = selectedHolidayHome["beachDistance"] + "";
             TextBoxShoppingDistance.Text = selectedHolidayHome["shoppingDistance"] + "";
             ComboBoxCountries.SelectedValue = (int)selectedHolidayHome["destinationId"];
+            LoadDataGrid();
+        }
+
+        private void LoadDataGrid()
+        {
             DataGridWeeklyHolidayHomeInfo.ItemsSource =
                 Service.GetWeeklyHolidayHomeInfos((int)ListBoxHolidayHomes.SelectedValue).DefaultView;
+            DataGridWeeklyHolidayHomeInfo.Columns[0].Header = "Ugenummer";
+            DataGridWeeklyHolidayHomeInfo.Columns[0].Width = 190;
+            DataGridWeeklyHolidayHomeInfo.Columns[0].IsReadOnly = true;
+            DataGridWeeklyHolidayHomeInfo.Columns[1].Header = "Pris i kr.";
+            DataGridWeeklyHolidayHomeInfo.Columns[1].Width = 190;
+            DataGridWeeklyHolidayHomeInfo.Columns[2].Header = "Ledig";
+            ((DataGridCheckBoxColumn) DataGridWeeklyHolidayHomeInfo.Columns[2]).IsThreeState = false;
+            DataGridWeeklyHolidayHomeInfo.CanUserAddRows = false;
+            SetComboBoxWeekNumbers();
+        }
+
+        private void SetComboBoxWeekNumbers()
+        {
+            int previousValue = ComboBoxWeekNumbers.SelectedIndex;
+            var availableWeekNumbers = new List<int>();
+            for (int i = 1; i <= 52; i++)
+            {
+                availableWeekNumbers.Add(i);
+            }
+            DataTable loadedTable = ((DataView) DataGridWeeklyHolidayHomeInfo.ItemsSource).Table;
+            foreach (DataRow row in loadedTable.Rows)
+            {
+                int weekNumber = Convert.ToInt32(row["weekNumber"]);
+                availableWeekNumbers.Remove(weekNumber);
+            }
+            ComboBoxWeekNumbers.ItemsSource = availableWeekNumbers;
+            if (previousValue < 0 || previousValue >= availableWeekNumbers.Count) ComboBoxWeekNumbers.SelectedIndex = 0;
+            else ComboBoxWeekNumbers.SelectedIndex = previousValue;
+
+            if (availableWeekNumbers.Count == 0) ButtonAddRow.IsEnabled = false;
+            else ButtonAddRow.IsEnabled = true;
         }
 
         private void ButtonHolidayHomeDelete_Click(object sender, RoutedEventArgs e)
@@ -202,6 +245,79 @@ namespace SpecialiseringsOpgave
             {
                 HolidayHomeMessage.Content = serviceException.Message;
             }
+        }
+
+        private void ButtonHolidayHomeCreate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var description = TextBoxDescription.Text;
+                var maxPersons = Convert.ToInt32(TextBoxMaxPersons.Text);
+                var shoppingDistance = Convert.ToInt32(TextBoxShoppingDistance.Text);
+                var beachDistance = Convert.ToInt32(TextBoxBeachDistance.Text);
+                var destinationId = Convert.ToInt32(ComboBoxCountries.SelectedValue);
+                Service.CreateHolidayHome(description, maxPersons, shoppingDistance, beachDistance, destinationId);
+                LoadListData();
+                HolidayHomeMessage.Content = "Destination oprettet!";
+            }
+            catch (FormatException)
+            {
+                HolidayHomeMessage.Content = "Du har indtastet bogstaver, hvor der bør være tal.";
+            }
+            catch (ServiceException serviceException)
+            {
+                HolidayHomeMessage.Content = serviceException.Message;
+            }
+        }
+
+        private void ButtonRemoveWeeklyInfo_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridWeeklyHolidayHomeInfo.SelectedIndex == -1) return;
+            ((DataView)DataGridWeeklyHolidayHomeInfo.ItemsSource).Table.Rows.RemoveAt(DataGridWeeklyHolidayHomeInfo.SelectedIndex);
+            SetComboBoxWeekNumbers();
+
+        }
+
+        private void ButtonAddWeeklyInfo_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine(DataGridWeeklyHolidayHomeInfo.ItemsSource);
+            Service.AddWeeklyHolidayHomeInfos((int)ListBoxHolidayHomes.SelectedValue,((DataView)DataGridWeeklyHolidayHomeInfo.ItemsSource).Table);
+            
+        }
+
+        private void DataGridWeeklyHolidayHomeInfo_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            try
+            {
+                
+                var weekNumberElement = DataGridWeeklyHolidayHomeInfo.Columns[0].GetCellContent(e.Row);
+                int weekNumber = 0;
+                if (weekNumberElement.GetType() == typeof(TextBox))
+                {
+                    weekNumber = Convert.ToInt32(((TextBox)weekNumberElement).Text);
+                    
+                }
+                var priceElement = DataGridWeeklyHolidayHomeInfo.Columns[1].GetCellContent(e.Row);
+                int price = 0;
+                if (priceElement.GetType() == typeof(TextBox))
+                {
+                    price = Convert.ToInt32(((TextBox)priceElement).Text);
+
+                }
+                Debug.WriteLine(weekNumber + " " + price);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void ButtonAddRow_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedWeek = Convert.ToInt32(ComboBoxWeekNumbers.SelectedItem);
+            ((DataView) DataGridWeeklyHolidayHomeInfo.ItemsSource).Table.Rows.Add(selectedWeek, 0, false);
+            ((List<int>) ComboBoxWeekNumbers.ItemsSource).Remove(selectedWeek);
+            SetComboBoxWeekNumbers();
         }
     }
 }
